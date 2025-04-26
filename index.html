@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Lista de Posts</title>
+
+  <link rel="stylesheet" type="text/css" href="style.css">
+
+</head>
+<body>
+    <article>
+        <h1>Posts</h1>
+        <button id="btn-carregar" class="btn">Carregar Posts</button>
+        <ul id="lista-posts" class="lista-post"></ul>
+
+        <div class="linha"></div>
+
+        <h1>Comentários</h1>
+        <button id="btn-carregar2" class="btn">Carregar Comentários</button>
+        <ul id="lista-comments" class="lista-post"></ul>
+
+        <div class="linha"></div>
+
+
+        <h1>Fotos</h1>
+        <button id="btn-carregar3" class="btn">Carregar Fotos</button>
+        <ul id="lista-photos" class="lista-post"></ul>
+
+
+    </article>
+
+
+  <script>
+    const btn = document.getElementById('btn-carregar');
+    const lista = document.getElementById('lista-posts');
+
+    btn.addEventListener('click', async () => {
+      try {
+        const response = await fetch('http://localhost:3000/posts');
+        const posts = await response.json();
+
+        lista.innerHTML = ''; // Limpa lista anterior
+        posts.forEach(post => {
+          const li = document.createElement('li');
+          li.textContent = post.title;
+          lista.appendChild(li);
+        });
+      } catch (error) {
+        console.error('Erro ao carregar posts', error);
+      }
+    });
+  </script>
+
+<script>
+    const btn2 = document.getElementById('btn-carregar2');
+    const lista2 = document.getElementById('lista-comments');
+
+    btn2.addEventListener('click', async () => {
+      try {
+        const response2 = await fetch('http://localhost:3000/comments');
+        const comments = await response2.json();
+
+        lista2.innerHTML = ''; // Limpa lista anterior
+        comments.forEach(comment => {
+            const li2 = document.createElement('li');
+            li2.textContent = comment.name //+  + comment.email;
+            lista2.appendChild(li2);
+        });
+
+      } catch (error) {
+        console.error('Erro ao carregar posts', error);
+      }
+    });
+</script>
+
+<script>
+  const btn3 = document.getElementById('btn-carregar3');
+  const lista3 = document.getElementById('lista-photos');
+
+  btn3.addEventListener('click', async () => {
+    try {
+      const response3 = await fetch('http://localhost:3000/photos');
+      const photos = await response3.json();
+
+      lista3.innerHTML = ''; // Limpa lista anterior
+      photos.forEach(photo => {
+          const li3 = document.createElement('li');
+          li3.textContent = photo.url;
+          lista3.appendChild(li3);
+      });
+
+    } catch (error) {
+      console.error('Erro ao carregar posts', error);
+    }
+  });
+</script>
+
+</body>
+</html>
+
+
